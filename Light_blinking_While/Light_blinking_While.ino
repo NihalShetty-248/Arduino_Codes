@@ -1,19 +1,12 @@
-/*A marine research team is assembling a floating sensor buoy powered by an ESP32. The buoy communicates its status to surface research vessels at night using two navigation markers: 
-  LED connected to Pin 4 is used as a Water-level beacon (Yellow marker) 
-  LED connected to Pin 33 is used as a Satellite link indicator (Green marker)
-
-These two systems run on separate hardware clocks inside the buoy, and hence their visual indicators must operate entirely on their own cadences: 
-  The Water-level beacon must turn ON and OFF at a brisk, steady rhythm—flipping its state every 300 ms to warn incoming marine vessels. 
-   The Satellite link indicator operates on an entirely different schedule—it must flip its state every 750 ms to confirm continuous telemetry uplink. 
- */
+/*A model car company is prototyping an autonomous pursuit vehicle based on the ESP32. The hardware engineer installed two ultra-bright blue strobe lights on the roof rack—using the LEDs connected to Pin 4 (left strobe) and Pin 33 (right strobe). To simulate the vehicle's high-visibility pursuit mode, the lighting system must produce a distinct double-pulse warning pattern rather than a simple continuous blink. 
+a. When the cruiser enters pursuit mode, both roof strobes must flash together in rapid bursts to mimic real emergency lights: they illuminate simultaneously for 100 milliseconds, shut off for 100 milliseconds. This warning sequence occurs exactly twice. 
+b. Once that warning is delivered, Left Strobe illuminates for 100ms and shuts off. When Left strobe becomes off, Right Strobe illuminates for 100ms and shuts off.
+c. Then the system needs a deliberate quiet interval: both lights must stay completely dark for 1.5 seconds, so the human eye can distinguish between separate pursuit alerts. 
+Then the above cycle repeats. */
 
 const int pin1=33;
 const int pin2=4;
-long start_time1=0;
-long start_time2=0;
-bool led1_state=HIGH;
-bool led2_state=HIGH;
-
+int i=0;
 void setup() {
   pinMode(pin1,OUTPUT);
   pinMode(pin2,OUTPUT);// put your setup code here, to run once:
@@ -21,17 +14,23 @@ void setup() {
 }
 
 void loop() {
-  long current_time=millis();
-  if (current_time-start_time1>=300) {
-    digitalWrite(pin1,led1_state);
-    led1_state=!led1_state;
-    start_time1=current_time;
-  }
-  if (current_time-start_time2>=750) {
-    digitalWrite(pin2,led2_state);
-    led2_state=!led2_state;
-    start_time2=current_time;
-  }
-
+  while (i<2) {
+    digitalWrite(pin1,HIGH);
+    digitalWrite(pin2,HIGH);
+    delay(100);
+    digitalWrite(pin1,LOW);
+    digitalWrite(pin2,LOW);
+    delay(100);
+    i=i+1;
+  } 
+  i=0;
+  digitalWrite(pin2,HIGH);
+  delay(100);
+  digitalWrite(pin2,LOW);
+  delay(100);
+  digitalWrite(pin1,HIGH);
+  delay(100);
+  digitalWrite(pin1,LOW);
+  delay(1500);// put your main code here, to run repeatedly:
 
 }
