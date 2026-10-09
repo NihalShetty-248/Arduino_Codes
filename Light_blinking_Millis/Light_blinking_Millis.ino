@@ -7,37 +7,32 @@ These two systems run on separate hardware clocks inside the buoy, and hence the
    The Satellite link indicator operates on an entirely different schedule—it must flip its state every 750 ms to confirm continuous telemetry uplink. 
  */
 
-const int pin=33;
-const int pot=36;
-const int ldr=39;
-const int but=0;
+const int pin1=33;
+const int pin2=4;
+long start_time1=0;
+long start_time2=0;
+bool led1_state=HIGH;
+bool led2_state=HIGH;
 
 void setup() {
-  pinMode(pin,OUTPUT);
-  pinMode(pot,INPUT);
-  pinMode(ldr,INPUT);
-  pinMode(but,INPUT_PULLUP);
-  Serial.begin(9600);
+  pinMode(pin1,OUTPUT);
+  pinMode(pin2,OUTPUT);// put your setup code here, to run once:
+
 }
 
 void loop() {
-  int button_state=digitalRead(but);
-  if (button_state==LOW) {
-    analogWrite(pin,255);
-  
+  long current_time=millis();
+  if (current_time-start_time1>=300) {
+    digitalWrite(pin1,led1_state);
+    led1_state=!led1_state;
+    start_time1=current_time;
   }
-  else {
-    float ldr_value=analogRead(ldr);
-    Serial.println(ldr_value);
-    if (ldr_value < 1024) {
-      analogWrite(pin,255);
-      float pot_value=analogRead(pot)/16;
-      analogWrite(pin,pot_value);
-    }
-    else {
-      analogWrite(pin,0);
-    }
-    
+  if (current_time-start_time2>=750) {
+    digitalWrite(pin2,led2_state);
+    led2_state=!led2_state;
+    start_time2=current_time;
+  }
 
-  }
+
 }
+
