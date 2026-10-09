@@ -1,14 +1,17 @@
+const int ldr=39
+const int led=33
+
 void setup() {
-  pinMode(39,INPUT);
-  pinMode(33,OUTPUT);
+  pinMode(ldr,INPUT);
+  pinMode(led,OUTPUT);
   Serial.begin(9600);// put your setup code here, to run once:
 
 }
 
 void loop() {
-  float intensity=analogRead(39);
+  float intensity=analogRead(ldr);
   Serial.println(intensity);
-  analogWrite(33,intensity);// put your main code here, to run repeatedly:
+  analogWrite(led,intensity);// put your main code here, to run repeatedly:
   
 
 }
