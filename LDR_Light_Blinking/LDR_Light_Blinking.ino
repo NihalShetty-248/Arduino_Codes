@@ -9,9 +9,12 @@ void setup() {
 }
 
 void loop() {
-  float intensity=analogRead(ldr);
-  Serial.println(intensity);
-  analogWrite(led,intensity);// put your main code here, to run repeatedly:
+  float time=analogRead(ldr);
+  Serial.println(time);
+  digitalWrite(led,HIGH);
+  delay(time);
+  digitalWrite(led,LOW);
+  delay(time);// put your main code here, to run repeatedly:
   
 
 }
