@@ -14,14 +14,13 @@ void setup() {
 }
 
 void loop() {
-  while (i<2) {
+  for (i;i<2;i++) {
     digitalWrite(pin1,HIGH);
     digitalWrite(pin2,HIGH);
     delay(100);
     digitalWrite(pin1,LOW);
     digitalWrite(pin2,LOW);
     delay(100);
-    i=i+1;
   } 
   i=0;
   digitalWrite(pin2,HIGH);
