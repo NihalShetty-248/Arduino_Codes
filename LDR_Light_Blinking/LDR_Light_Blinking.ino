@@ -1,5 +1,5 @@
-const int ldr=39
-const int led=33
+const int ldr=39;
+const int led=33;
 
 void setup() {
   pinMode(ldr,INPUT);
